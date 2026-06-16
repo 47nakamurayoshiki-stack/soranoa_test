@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SORANOA Cream Sand Pie 商品紹介ページ">
+  <title>SORANOA | Cream Sand Pie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,400&family=Dancing+Script:wght@700&family=Klee+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #153b68;
+      --deep: #0d5da8;
+      --sky: #dff4fb;
+      --sky-2: #80d4ef;
+      --paper: #fffefa;
+      --pink: #d81372;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { overflow-x: hidden; } /* Chrome SP 横はみ出し空白防止 */
+    html { scroll-behavior: smooth; scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Klee One", "Noto Serif JP", serif;
+      line-height: 1.9;
+      letter-spacing: .06em;
+    }
+    img { display: block; width: 100%; }
+    a { color: inherit; }
+    .sans { font-family: "Klee One", "Noto Sans JP", sans-serif; }
+    .no-break { white-space: nowrap; }
+    .wrap { width: min(1120px, calc(100% - 64px)); margin: auto; }
+    .eyebrow {
+      margin: 0 0 12px;
+      font: 600 11px/1.4 "Klee One","Noto Sans JP", Arial, sans-serif;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+    }
+    .brush {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.74);
+      filter: blur(1px);
+      pointer-events: none;
+    }
+
+    /* =====================
+       スクロールフェードイン
+    ===================== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .85s cubic-bezier(.22,.88,.36,1), transform .85s cubic-bezier(.22,.88,.36,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-48px);
+      transition: opacity .9s cubic-bezier(.22,.88,.36,1), transform .9s cubic-bezier(.22,.88,.36,1);
+    }
+    .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(48px);
+      transition: opacity .9s cubic-bezier(.22,.88,.36,1), transform .9s cubic-bezier(.22,.88,.36,1);
+    }
+    .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+    .fade-delay-1 { transition-delay: .1s; }
+    .fade-delay-2 { transition-delay: .22s; }
+    .fade-delay-3 { transition-delay: .36s; }
+    .fade-delay-4 { transition-delay: .52s; }
+
+    /* =====================
+       HEADER — back.jpg テクスチャ背景
+    ===================== */
+    header {
+      position: absolute;
+      z-index: 10;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 22px 0;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      opacity: .82;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9) 55%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9) 55%, transparent 100%);
+      pointer-events: none;
+    }
+    /* 下端ぼかし＋上部明るさ調整オーバーレイ */
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 80% at 50% 0%, rgba(255,255,255,.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* ロゴ中央寄せ */
+    .header-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;  /* 中央 */
+    }
+    .logo { text-decoration: none; }
+    .logo img {
+      display: block;
+      width: 200px;
+      height: auto;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,.18)) brightness(1.12);
+    }
+
+    /* =====================
+       HERO
+    ===================== */
+    .hero {
+      position: relative;
+      min-height: 900px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(255,255,255,.95) 0 8%, transparent 23%),
+        linear-gradient(135deg, #fafdff 0 39%, #d4f2fb 70%, #72cce9 100%);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 100%, rgba(255,255,255,.82) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 30% 80%, rgba(255,255,255,.55) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, transparent, #f0fbfe);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      align-items: center;
+      min-height: 700px;
+      padding-top: 100px;
+    }
+    .hero-copy { padding: 40px 0 70px; }
+
+    /* KOBE バッジ */
+    .kobe-note {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin: 0 0 20px;
+      padding: 10px 20px 12px;
+
+      color: var(--deep);
+      background: rgba(255,255,255,.48);
+      box-shadow: 0 10px 24px rgba(13,93,168,.08);
+      font-family: "Klee One","Noto Sans JP", sans-serif;
+      animation: cardAir 5.6s ease-in-out infinite;
+    }
+  
+    .kobe-note span { font-size: 13px; letter-spacing: .22em; }
+
+    /* NEW バッジ */
+    .hero-new-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .hero-new-badge .new-script {
+      font-family: "Dancing Script", cursive;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--pink);
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(216,19,114,.22));
+    }
+    .hero-new-badge .new-sub {
+      font: 500 11px/1.4 "Noto Sans JP", sans-serif;
+      letter-spacing: .2em;
+      color: var(--deep);
+      opacity: .8;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: 400;
+      font-size: clamp(44px, 5.2vw, 60px);
+      line-height: 1.48;
+      letter-spacing: .1em;
+      animation: titleFloat 6.4s ease-in-out infinite;
+    }
+    h1 span {
+      display: block;
+      font-size: .46em;
+      animation: titleFloat 6.4s ease-in-out infinite .35s;
+    }
+    .hero-copy > p {
+      max-width: 420px;
+      margin: 28px 0 38px;
+      font-size: 15px;
+    }
+
+    /* ── 雲形CTAボタン ── */
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 28px;
+      padding: 20px 36px 22px 32px;
+      color: white;
+      background: var(--deep);
+      text-decoration: none;
+      font: 600 13px/1 "Noto Sans JP", sans-serif;
+      letter-spacing: .15em;
+      box-shadow: 0 13px 30px rgba(13,93,168,.22);
+      animation: softPulse 3.8s ease-in-out infinite;
+      /* 雲のようなやんわり曲線 */
+      border-radius: 54% 46% 58% 42% / 46% 54% 46% 54%;
+      position: relative;
+    }
+    .cta::after { content: "→"; font-size: 18px; opacity: .85; }
+    .cta:hover { border-radius: 48% 52% 52% 48% / 52% 48% 52% 48%; }
+
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      padding: 85px 0 40px 30px;
+    }
+
+    /* FV女の子：初期は普通のfloat、スクロールで吹き飛びアニメ */
+    .hero-girl {
+      position: absolute;
+      z-index: 2;
+      right: -11%;
+      top: 3%;
+      width: min(740px, 95%);
+      filter: drop-shadow(0 28px 28px rgba(13,93,168,.15));
+      transform-origin: 56% 52%;
+      animation: floatGirl 5.8s ease-in-out infinite;
+      transition: none;
+      will-change: transform, opacity;
+    }
+    /* スクロールで ふんわり右上へ流れる */
+    .hero-girl.fly-away {
+      animation: girlFlyAway 2.2s cubic-bezier(.25,.46,.45,.94) forwards !important;
+    }
+    /* スクロールトップに戻ったとき ふんわり復帰 */
+    .hero-girl.fly-return {
+      animation: girlFlyReturn 1.8s cubic-bezier(.22,.88,.36,1) forwards !important;
+    }
+    @keyframes girlFlyAway {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      20%  { transform: translate(4%,-3%) rotate(2deg) scale(1.02); opacity: 1; }
+      55%  { transform: translate(22%,-26%) rotate(10deg) scale(.92); opacity: .7; }
+      80%  { transform: translate(52%,-68%) rotate(22deg) scale(.65); opacity: .3; }
+      100% { transform: translate(78%,-105%) rotate(32deg) scale(.38); opacity: 0; }
+    }
+    @keyframes girlFlyReturn {
+      0%   { transform: translate(78%,-105%) rotate(32deg) scale(.38); opacity: 0; }
+      25%  { opacity: .4; }
+      60%  { transform: translate(18%,-20%) rotate(6deg) scale(.88); opacity: .8; }
+      85%  { transform: translate(-2%, 3%) rotate(-1deg) scale(1.02); opacity: 1; }
+      100% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+    }
+
+    /* スタンプ */
+    .hero-stamp {
+      position: absolute;
+      z-index: 4;
+      right: 0%; bottom: 0%;
+      width: 145px; height: 145px;
+      display: grid;
+      place-content: center;
+      text-align: center;
+      border-radius: 47% 53% 44% 56%;
+      color: white;
+      background: var(--pink);
+      transform: rotate(7deg);
+      font: 600 13px/1.7 "Noto Sans JP", sans-serif;
+      box-shadow: 0 12px 25px rgba(179,16,100,.2);
+    }
+    .hero-stamp .stamp-new { display: block; font-family: "Dancing Script", cursive; font-size: 30px; font-weight: 700; line-height: 1.1; letter-spacing: .04em; }
+    .stamp-new-img { display: block; width: 72px; height: auto; margin: 0 auto 2px; filter: brightness(0) invert(1); }
+    .hero-stamp .stamp-title { display: block; font-size: 11px; letter-spacing: .08em; margin-top: 2px; }
+    .hero-stamp .stamp-sub { display: block; font-size: 17px; font-weight: 700; letter-spacing: .08em; }
+
+    /* CREAM SAND PIE テキスト：少し上に */
+    .hero-note {
+      position: absolute;
+      right: 4%;
+      bottom: 24%;   /* 上に移動 */
+      z-index: 6;
+      font: 11px/1.8 "Noto Sans JP", sans-serif;
+      letter-spacing: .14em;
+      writing-mode: vertical-rl;
+    }
+    .hero .b1 { width: 250px; height: 100px; top: 16%; right: -5%; transform: rotate(-15deg); }
+    .hero .b2 { width: 310px; height: 115px; bottom: 4%; left: -8%; transform: rotate(9deg); }
+    .top-cloud {
+      position: absolute;
+      z-index: 1;
+      left: 0; right: 0; bottom: -2px;
+      width: 100%;
+      opacity: .88;
+      pointer-events: none;
+      animation: cloudDrift 12s ease-in-out infinite alternate;
+    }
+
+    /* =====================
+       INTRO + ORIGIN（統合版）
+    ===================== */
+    .intro {
+      position: relative;
+      padding: 0 0 120px;
+      overflow: hidden;
+      text-align: center;
+      background: linear-gradient(to bottom, #f0fbfe 0%, #e8f8fd 40%, #d7f3fb 100%);
+    }
+    .intro::before {
+      content: "";
+      position: absolute;
+      width: 440px; height: 440px;
+      left: -180px; top: 60px;
+      border-radius: 48% 52% 57% 43%;
+      background: rgba(255,255,255,.55);
+    }
+
+    /* ロゴブロック */
+    .intro-logo {
+      position: relative;
+      padding: 60px 0 48px;
+    }
+    .intro-logo img {
+      display: block;
+      width: min(260px, 60%);
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 4px 16px rgba(13,93,168,.13));
+    }
+
+    /* キャッチコピー */
+    .intro-tagline { position: relative; padding: 0 0 48px; }
+    .intro-tagline h2 {
+      margin: 0;
+      font-weight: 400;
+      font-size: clamp(28px, 3.8vw, 50px);
+      line-height: 1.55;
+      letter-spacing: .16em;
+    }
+    .intro-tagline h2 em { color: var(--deep); font-style: normal; }
+    .intro-tagline .eyebrow { color: var(--deep); margin-bottom: 18px; }
+    .intro-tagline p {
+      position: relative;
+      margin: 28px auto 0;
+      max-width: 580px;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    /* 語源テキスト */
+    .origin { position: relative; padding: 0 0 0; }
+    .origin-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: left;
+      background: rgba(255,255,255,.52);
+      border-radius: 24px;
+      padding: 48px 52px;
+      box-shadow: 0 8px 32px rgba(13,93,168,.07);
+    }
+    .origin-text .eyebrow { color: var(--deep); margin-bottom: 10px; }
+    .origin-title {
+      margin: 0 0 18px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .origin-title em { display: block; font-style: italic; color: var(--deep); font-size: .72em; margin-top: 4px; }
+    .origin-desc { font-size: 14px; line-height: 2.1; margin: 0; }
+    /* 不要になったCSS（残しても害なし） */
+    .origin-kanji-wrap { display: none; }
+    .origin-kanji { display: none; }
+    .kanji-block { display: none; }
+    .origin-cloud-deco { display: none; }
+
+    /* =====================
+       STORY
+    ===================== */
+    .story {
+      position: relative;
+      padding: 120px 0;
+      overflow: hidden;
+      background: linear-gradient(180deg, #d7f3fb 0, #8ed9ed 100%);
+    }
+    .story::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, #f5fafc);
+      pointer-events: none;
+    }
+    .story-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 82px; }
+
+    /* ── 雲形写真 ── */
+    .story-image { position: relative; }
+    .story-image img {
+      width: min(590px, 100%);
+      height: 480px;
+      margin: 0 auto;
+      object-fit: cover;
+      object-position: 38% 30%;
+      box-shadow: 0 30px 60px rgba(16,94,137,.18);
+      animation: floatPhoto 6.2s ease-in-out infinite;
+      /* やんわり曲線の雲形 */
+      border-radius: 58% 42% 52% 48% / 48% 56% 44% 52%;
+    }
+
+    .story-copy h2 { margin: 10px 0 25px; font-weight: 400; font-size: 38px; line-height: 1.6; }
+    .story-copy p { font-size: 14px; }
+
+    /* point：段ズレ修正 → alignItems: center で縦中央揃え */
+    .point {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .point b {
+      flex-shrink: 0;
+      display: grid;
+      place-content: center;
+      width: 52px; height: 52px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font: italic 18px/1 "Playfair Display", Georgia, serif;
+    }
+    .point span { font-size: 13px; line-height: 1.8; }
+
+    /* =====================
+       FLAVORS
+    ===================== */
+    .flavors {
+      position: relative;
+      padding: 145px 0 135px;
+      perspective: 1200px;
+      background: linear-gradient(to bottom, #f5fafc 0%, var(--paper) 60%);
+    }
+    .flavors::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      right: 5.5%; top: 84px;
+      width: 108px; height: 148px;
+      border-radius: 8px 42px 18px 8px;
+      background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(223,244,251,.55));
+      box-shadow: -12px 14px 28px rgba(21,59,104,.08);
+      transform-origin: left center;
+      animation: pageTurn 5.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .flavors-bottom-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(to bottom, transparent, #eff8fb); pointer-events: none; }
+
+    /* section-head：左揃え＋左に寄せる */
+    .section-head {
+      margin-bottom: 64px;
+      text-align: left;
+      padding-left: 2%;   /* 少し左に */
+    }
+    .section-head h2 { margin: 0; color: #111; font-weight: 400; font-size: 56px; letter-spacing: -.01em; }
+    .section-head p { margin: 4px 0 0; font-size: 13px; }
+
+    /* flavorsヘッダーエリア：左テキスト＋右女の子の2カラム */
+    .flavors-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      margin-bottom: 64px;
+      min-height: 320px;
+    }
+    .flavors-header .section-head {
+      margin-bottom: 0;
+    }
+
+    /* flavors女の子イラスト */
+    .flavors-girl {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+    .flavors-girl img {
+      width: min(480px, 100%);
+      height: auto;
+      display: block;
+      /* 初期：右外に隠れている */
+      opacity: 0;
+      transform: translate(120%, -30%) rotate(25deg) scale(.6);
+      -webkit-transform: translate(120%, -30%) rotate(25deg) scale(.6);
+      filter: drop-shadow(0 20px 30px rgba(13,93,168,.15));
+      transition:
+        opacity 1.4s cubic-bezier(.22,.88,.36,1),
+        transform 1.4s cubic-bezier(.22,.88,.36,1);
+      -webkit-transition:
+        opacity 1.4s cubic-bezier(.22,.88,.36,1),
+        -webkit-transform 1.4s cubic-bezier(.22,.88,.36,1);
+    }
+    .flavors-girl img.fly-in {
+      opacity: 1;
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      -webkit-transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    /* セクション離脱：右上に飛び去る */
+    .flavors-girl img.fly-out {
+      animation: flavorsGirlFlyOut 1.8s cubic-bezier(.25,.46,.45,.94) forwards !important;
+      transition: none !important;
+    }
+    /* セクション再来：右から飛び戻る */
+    .flavors-girl img.fly-back {
+      animation: flavorsGirlFlyBack 1.4s cubic-bezier(.22,.88,.36,1) forwards !important;
+      transition: none !important;
+    }
+    @keyframes flavorsGirlFlyOut {
+      0%   { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+      30%  { opacity: .9; transform: translate(8%,-5%) rotate(6deg) scale(1.02); }
+      65%  { opacity: .4; transform: translate(60%,-55%) rotate(22deg) scale(.7); }
+      100% { opacity: 0; transform: translate(120%,-100%) rotate(38deg) scale(.4); }
+    }
+    @keyframes flavorsGirlFlyBack {
+      0%   { opacity: 0; transform: translate(120%,-30%) rotate(25deg) scale(.6); }
+      35%  { opacity: .5; }
+      70%  { opacity: .9; transform: translate(8%,-4%) rotate(4deg) scale(.95); }
+      100% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
+    }
+
+    .flavor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 64px 44px; }
+
+    .flavor-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.16fr .84fr;
+      align-items: center;
+      min-height: 500px;
+      overflow: hidden;
+      border-radius: 180px 18px 18px 180px;
+      background: #eef9fd;
+      outline: 1px solid rgba(255,255,255,.78);
+      outline-offset: -10px;
+      opacity: 0;
+      transform: translateY(60px) scale(.97);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .flavor-card.in-view { animation: cloudFloatIn .95s cubic-bezier(.22,.88,.36,1) forwards; }
+    @keyframes cloudFloatIn {
+      0%   { opacity: 0; transform: translateY(60px) scale(.97); }
+      60%  { opacity: .9; }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .flavor-card:nth-child(even) { border-radius: 18px 180px 180px 18px; }
+    .flavor-card.in-view:hover { transform: translateY(-8px); box-shadow: 0 20px 38px rgba(21,59,104,.12); }
+    .flavor-main { align-self: stretch; height: 100%; min-height: 286px; object-fit: cover; }
+    .flavor-copy { padding: 28px 30px; text-align: center; }
+    .flavor-copy small { display: block; margin-bottom: 10px; font: 600 10px/1 "Noto Sans JP", Arial, sans-serif; letter-spacing: .28em; }
+    .flavor-copy h3 { margin: 0; font-weight: 400; font-size: 25px; }
+    .flavor-copy p { margin: 11px 0 0; font: 11px/1.7 "Noto Sans JP", sans-serif; letter-spacing: .08em; }
+    .flavor-packages { grid-column: 1 / -1; display: block; padding: 0 26px 30px; }
+    .package-shot { overflow: visible; background: transparent; cursor: pointer; position: relative; }
+    .package-shot::after {
+      content: "クリック拡大";
+      position: absolute;
+      bottom: 10px; left: 50%;
+      transform: translateX(-50%);
+      font: 600 9px/1.4 "Noto Sans JP", sans-serif;
+      letter-spacing: .14em;
+      color: var(--deep);
+      background: rgba(255,255,255,.75);
+      padding: 3px 8px;
+      border-radius: 100px;
+      opacity: .6; white-space: nowrap;
+      transition: opacity .2s; pointer-events: none;
+    }
+    .package-shot:hover::after { opacity: 1; }
+    .package-shot img { height: 320px; object-fit: contain; transition: transform .3s ease; }
+    .package-shot:hover img { transform: scale(1.06); }
+    .custard    { background: #e7f7fc; }
+    .choco      { color: #fff; background: #835d51; }
+    .matcha     { background: #e9f4e3; }
+    .peach      { background: #fde9f0; }
+    .strawberry { background: #fbe8e7; }
+    .assort     { background: #e4f2f8; }
+
+    /* =====================
+       MODAL
+    ===================== */
+    .pkg-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(10,30,55,.72); backdrop-filter: blur(8px); align-items: center; justify-content: center; cursor: zoom-out; }
+    .pkg-modal.open { display: flex; animation: modalIn .25s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+    .pkg-modal img { max-width: min(480px, 88vw); max-height: 80vh; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 24px 48px rgba(0,0,0,.3)); }
+    .pkg-modal-close { position: absolute; top: 24px; right: 28px; color: white; font-size: 32px; cursor: pointer; opacity: .8; line-height: 1; font-weight: 300; }
+    .pkg-modal-close:hover { opacity: 1; }
+
+    /* =====================
+       GIFT
+    ===================== */
+    .gift { position: relative; padding: 130px 0 140px; overflow: hidden; background: #eff8fb; }
+    .gift::before, .gift::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.9); }
+    .gift::before { width: 420px; height: 170px; top: 35px; left: -40px; }
+    .gift::after  { width: 520px; height: 220px; right: -120px; bottom: -100px; }
+    .gift-bottom-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 160px; background: linear-gradient(to bottom, transparent, rgba(21,59,104,.08)); pointer-events: none; }
+    .gift-grid { position: relative; z-index: 1; display: grid; grid-template-columns: .66fr 1.34fr; align-items: center; gap: 65px; }
+    .gift h2 { margin: 8px 0 24px; font-weight: 400; font-size: 40px; line-height: 1.55; }
+    .gift p { font-size: 14px; }
+    /* gift画像も雲形 */
+    .gift img {
+      width: min(780px, 100%);
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: drop-shadow(0 25px 32px rgba(16,61,95,.13));
+      animation: floatPhoto 6.8s ease-in-out infinite;
+      border-radius: 52% 48% 55% 45% / 45% 52% 48% 55%;
+    }
+
+    /* =====================
+       SHOPS — back.jpg 水彩風背景
+    ===================== */
+    .shops {
+      position: relative;
+      padding: 125px 0;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    .shops::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('assets/back.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    /* 暗めの半透明オーバーレイでテキスト可読性を確保しつつ水彩感を残す */
+    .shops::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 40%, rgba(10,40,90,.40) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 80% at 75% 60%, rgba(5,25,70,.36) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(8,30,75,.25) 0%, rgba(5,20,60,.44) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .shops .wrap { position: relative; z-index: 1; }
+    .shops h2 { margin: 0 0 20px; font-weight: 400; font-size: 38px; text-shadow: 0 2px 12px rgba(0,0,20,.4); }
+    .shops p   { margin: 0 auto 34px; max-width: 590px; font-size: 14px; text-shadow: 0 1px 6px rgba(0,0,20,.3); }
+    .shops .cta { color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 8px 24px rgba(0,10,40,.18); animation: none; border-radius: 54% 46% 58% 42% / 46% 54% 46% 54%; }
+
+    /* =====================
+       FOOTER
+    ===================== */
+    footer { padding: 46px 0; color: #111; text-align: center; background: white; }
+    .footer-logo { display: block; width: 150px; height: auto; margin: 0 auto; }
+    footer small { display: block; margin-top: 14px; font: 9px/1.5 "Noto Sans JP", Arial, sans-serif; letter-spacing: .15em; }
+
+    /* =====================
+       追従キャラクター
+    ===================== */
+    #floating-girl {
+      position: fixed;
+      bottom: 28px; right: 24px;
+      z-index: 50;
+      width: 100px; height: auto;
+      pointer-events: none;
+      filter: drop-shadow(0 8px 16px rgba(13,93,168,.18));
+      transform-origin: 50% 100%;
+    }
+    #floating-girl.sway-up   { animation: girlSwayUp   1.4s ease-in-out forwards; }
+    #floating-girl.sway-down { animation: girlSwayDown 1.4s ease-in-out forwards; }
+    #floating-girl.sway-up.flipped   { animation: girlSwayUpFlip   1.4s ease-in-out forwards; }
+    #floating-girl.sway-down.flipped { animation: girlSwayDownFlip 1.4s ease-in-out forwards; }
+    @keyframes girlSwayUp        { 0% { transform: rotate(0deg) translateY(0); } 40% { transform: rotate(-5deg) translateY(-10px); } 100% { transform: rotate(2deg) translateY(0); } }
+    @keyframes girlSwayDown      { 0% { transform: rotate(0deg) translateY(0); } 40% { transform: rotate(5deg) translateY(10px); } 100% { transform: rotate(-2deg) translateY(0); } }
+    @keyframes girlSwayUpFlip    { 0% { transform: scaleX(-1) rotate(0deg) translateY(0); } 40% { transform: scaleX(-1) rotate(-5deg) translateY(-10px); } 100% { transform: scaleX(-1) rotate(2deg) translateY(0); } }
+    @keyframes girlSwayDownFlip  { 0% { transform: scaleX(-1) rotate(0deg) translateY(0); } 40% { transform: scaleX(-1) rotate(5deg) translateY(10px); } 100% { transform: scaleX(-1) rotate(-2deg) translateY(0); } }
+
+    /* =====================
+       GLOBAL KEYFRAMES
+    ===================== */
+    @keyframes floatGirl  { 0%,100% { transform: translate3d(0,0,0) rotate(-1.5deg); } 50% { transform: translate3d(0,-18px,0) rotate(2deg); } }
+    @keyframes cloudDrift { 0% { transform: translate3d(-18px,0,0); } 100% { transform: translate3d(18px,-6px,0); } }
+    @keyframes softPulse  { 0%,100% { transform: translateY(0); box-shadow: 0 13px 30px rgba(13,93,168,.22); } 50% { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(13,93,168,.26); } }
+    @keyframes floatPhoto { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes cardAir    { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes pageTurn   { 0%,100% { transform: rotateY(0deg) translateY(0); opacity: .7; } 45% { transform: rotateY(-34deg) translateY(-4px); opacity: .95; } 70% { transform: rotateY(-8deg) translateY(0); opacity: .82; } }
+    @keyframes titleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-girl, .top-cloud, .cta, .story-image img, .gift img,
+      .flavor-card, h1, h1 span, .kobe-note, #floating-girl { animation: none !important; }
+      .flavor-card { opacity: 1; transform: none; }
+      .fade-in, .fade-in-left, .fade-in-right { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* =====================
+       RIGHT-BOTTOM TOP BUTTON（キャラ＋TOP文字）
+    ===================== */
+    #floating-girl-wrap {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #floating-girl {
+      display: block;
+      width: 100px;
+      height: auto;
+      filter: drop-shadow(0 8px 16px rgba(13,93,168,.18));
+      transform-origin: 50% 100%;
+      pointer-events: none;
+    }
+    #floating-girl-wrap .top-label {
+      font: 700 9px/1 "Noto Sans JP", sans-serif;
+      letter-spacing: .28em;
+      color: var(--deep);
+      opacity: .72;
+      text-shadow: 0 1px 4px rgba(255,255,255,.9);
+    }
+    #floating-girl.sway-up   { animation: girlSwayUp   1.4s ease-in-out forwards; }
+    #floating-girl.sway-down { animation: girlSwayDown 1.4s ease-in-out forwards; }
+    #floating-girl.sway-up.flipped   { animation: girlSwayUpFlip   1.4s ease-in-out forwards; }
+    #floating-girl.sway-down.flipped { animation: girlSwayDownFlip 1.4s ease-in-out forwards; }
+    @keyframes girlSwayUp        { 0% { transform: rotate(0deg) translateY(0); } 40% { transform: rotate(-5deg) translateY(-10px); } 100% { transform: rotate(2deg) translateY(0); } }
+    @keyframes girlSwayDown      { 0% { transform: rotate(0deg) translateY(0); } 40% { transform: rotate(5deg) translateY(10px); } 100% { transform: rotate(-2deg) translateY(0); } }
+    @keyframes girlSwayUpFlip    { 0% { transform: scaleX(-1) rotate(0deg) translateY(0); } 40% { transform: scaleX(-1) rotate(-5deg) translateY(-10px); } 100% { transform: scaleX(-1) rotate(2deg) translateY(0); } }
+    @keyframes girlSwayDownFlip  { 0% { transform: scaleX(-1) rotate(0deg) translateY(0); } 40% { transform: scaleX(-1) rotate(5deg) translateY(10px); } 100% { transform: scaleX(-1) rotate(-2deg) translateY(0); } }
+
+    /* =====================
+       RESPONSIVE — スマホ
+    ===================== */
+    @media (max-width: 760px) {
+      .wrap { width: calc(100% - 40px); }
+
+      /* ── ヘッダー ── */
+      header { padding: 14px 0 10px; }
+      .logo img { width: 100px; }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: auto;
+        /* テキスト＋イラストを縦積みに */
+      }
+      .hero-grid {
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+        padding-top: 50px;
+        padding-bottom: 0;
+        gap: 0;
+      }
+
+      /* コピーブロック */
+      .hero-copy {
+        position: relative;
+        z-index: 3;
+        padding: 18px 0 16px;
+        order: 1;
+      }
+      .kobe-note {
+        padding: 6px 14px 8px;
+        margin-bottom: 16px;
+        gap: 2px;
+      }
+      .kobe-note strong { font-size: 20px; }
+      .kobe-note span   { font-size: 11px; }
+
+      h1 {
+        font-size: clamp(26px, 7.8vw, 42px);
+        line-height: 1.45;
+        letter-spacing: .03em;
+      }
+      h1 br { display: none; }
+      h1 > span {
+        display: block;
+        padding-left: 0;
+        font-size: .65em;
+        white-space: nowrap;
+        letter-spacing: .01em;
+      }
+      h1 > span br { display: none; }
+      h1 > span .no-break { white-space: nowrap; }
+      .intro-tagline { text-align: left; }
+      .intro-tagline p { text-align: left; margin-left: 0; }
+      .hero-copy > p {
+        width: 92%;
+        font-size: 13px;
+        margin: 18px 0 24px;
+        line-height: 1.85;
+      }
+      .cta {
+        padding: 16px 28px 18px 22px;
+        font-size: 13px;
+        gap: 20px;
+      }
+
+      /* イラストブロック：コピーの下に全幅で */
+      .hero-visual {
+        order: 2;
+        position: relative;
+        width: 100%;
+        min-height: 0;
+        padding: 0;
+        overflow: visible;
+        /* はみ出しはhero側のoverflow:hiddenに任せる */
+      }
+      .hero-girl {
+        position: relative;
+        right: auto; top: auto;
+        width: 115%;          /* 少し大きくして端まで届かせる */
+        margin-left: -7.5%;   /* 中央に補正 */
+        display: block;
+        transform-origin: 50% 60%;
+      }
+
+      /* スタンプ：イラスト右下に重ねる */
+      .hero-stamp {
+        position: absolute;
+        right: 4%;
+        bottom: 85%;
+        top: auto; left: auto;
+        width: 110px; height: 110px;
+        font-size: 10px;
+      }
+      .hero-stamp .stamp-new { font-size: 22px; }
+      .hero-stamp .stamp-sub { font-size: 14px; }
+
+      .hero-note { display: none; }
+      .hero .b1, .hero .b2 { display: none; }
+      .top-cloud {
+        position: absolute;
+        width: 200%; left: -50%;
+        opacity: .72;
+      }
+
+      /* ── INTRO ── */
+      .intro { padding: 52px 0 72px; }
+      .intro-logo { padding: 0 0 36px; }
+      .intro-logo img { width: min(200px, 55%); }
+      .intro-tagline { padding: 0 0 36px; }
+      .intro-tagline h2 { font-size: clamp(24px, 7vw, 34px); }
+      .intro-tagline p  { font-size: 13px; text-align: left; }
+      .origin { padding: 0 0 0; }
+      .origin-inner { padding: 32px 28px; border-radius: 18px; }
+      .origin-title { font-size: clamp(28px, 7vw, 40px); }
+      .origin-desc  { font-size: 13px; }
+
+      /* ── STORY ── */
+      .story { padding: 72px 0 88px; }
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-copy h2 { font-size: 28px; }
+      .story-image img {
+        width: min(360px, 88%);
+        height: 300px;
+      }
+
+      /* ── FLAVORS ── */
+      .flavors { padding: 80px 0 100px; }
+      .flavors::after { display: none; }
+      .flavors-header {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        margin-bottom: 36px;
+        gap: 0;
+      }
+      .flavors-girl {
+        display: none; /* SPでは非表示（女の子はTOPのみ） */
+      }
+      .section-head { padding-left: 0; margin-bottom: 0; }
+      .section-head h2 { font-size: 40px; }
+      .flavor-grid { grid-template-columns: 1fr; gap: 24px; }
+      .flavor-card,
+      .flavor-card:nth-child(even) {
+        grid-template-columns: 1.15fr .85fr;
+        min-height: 300px;
+        border-radius: 120px 14px 14px 120px;
+      }
+      .flavor-main { min-height: 200px; }
+      .flavor-copy { padding: 16px 14px; }
+      .flavor-copy h3 { font-size: 18px; }
+      .flavor-copy p  { font-size: 10px; }
+      .flavor-packages { padding: 0 14px 18px; }
+      .package-shot img { height: 200px; }
+
+      /* ── GIFT ── */
+      .gift { padding: 72px 0 80px; }
+      .gift-grid { grid-template-columns: 1fr; gap: 40px; }
+      .gift h2 { font-size: 28px; }
+      .gift-copy { order: 1; }
+      .gift img { aspect-ratio: 3/2; }
+
+      /* ── SHOPS ── */
+      .shops { padding: 80px 0; }
+      .shops h2 { font-size: 28px; }
+
+      /* ── FOOTER ── */
+      footer { padding: 36px 0; }
+
+      /* ── TOPボタン ── */
+      #floating-girl-wrap { bottom: 20px; right: 16px; }
+      #floating-girl { width: 68px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a id="floating-girl-wrap" href="#top" aria-label="ページの先頭へ">
+    <img id="floating-girl" src="assets/soranoa_blue2.png" alt="SORANOAキャラクター">
+    <span class="top-label">TOP</span>
+  </a>
+
+  <div class="pkg-modal" id="pkgModal">
+    <span class="pkg-modal-close" id="pkgModalClose">×</span>
+    <img id="pkgModalImg" src="" alt="パッケージ拡大">
+  </div>
+
+  <header>
+    <div class="wrap header-inner">
+      <a class="logo" href="#top"><img src="assets/sign_logo.png" alt="SORANOA Cream Sand Pie"></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <i class="brush b1"></i><i class="brush b2"></i>
+      <img class="top-cloud" src="assets/cloud_top.png" alt="">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="kobe-note">KOBE -神戸から-</div>
+          <h1>軽やかに、<br>サクッと。<span>ふんわり、こころほどける。</span></h1>
+          <p>香ばしいパイに、なめらかなクリームをサンド。<br>雲のようにやわらかく、空のように軽やかなひとくちを。</p>
+          <a class="cta" href="#flavors">フレーバーを見る</a>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-girl" id="heroGirl" src="assets/soranoa_blue1.png" alt="青いドレスの女の子イラスト">
+          <div class="hero-stamp sans">
+            <img class="stamp-new-img" src="assets/new.png" <span class="stamp-title">新発売</span>
+            <span class="stamp-sub">SORANOA</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-note sans">CREAM SAND PIE / SORANOA</div>
+    </section>
+
+    <section class="intro" id="intro">
+      <div class="wrap">
+
+        <!-- ロゴ 
+        <div class="intro-logo fade-in">
+          <img src="assets/sign_logo.png" alt="SORANOA Cream Sand Pie">
+        </div>-->
+
+        <!-- キャッチコピー -->
+        <div class="intro-tagline">
+          <p class="eyebrow fade-in">A LITTLE PIECE OF THE SKY</p>
+          <h2 class="fade-in fade-delay-1">雲をひとくち<br><em>空をまとった軽やかさ</em></h2>
+          <p class="fade-in fade-delay-2">繊細に焼き上げたパイの心地よい歯ざわり。口どけのよいクリーム。ふたつの食感が重なって、ふっと気持ちがほどける、そんな時間をお届けします。</p>
+        </div>
+
+        <!-- 語源ブロック -->
+        <div class="origin">
+          <div class="origin-inner fade-in fade-delay-1">
+            <div class="origin-text">
+              <p class="eyebrow">THE NAME</p>
+              <h2 class="origin-title">SORANOA<em>ソラノアとは？</em></h2>
+              <p class="origin-desc">
+                「SORANOA」は、<strong>SORA【空】</strong>と<strong>NOA【和・輪】</strong>から生まれ、<br>
+                ふわりとやさしく、人と人とをつなげられるような言葉です。<br><br>
+                そんな、空のように軽く、やさしく、心に余白をつくるお菓子。<br>
+                —パイの軽やかな食感と口どけの良いクリームを、雲のスカートをまとい空を舞う女の子のデザインで表現しました。
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="wrap story-grid">
+        <div class="story-image fade-in-left">
+          <img src="assets/texture_extra.jpg" alt="クリームサンドパイ">
+        </div>
+        <div class="story-copy fade-in-right fade-delay-1">
+          <p class="eyebrow">OUR TEXTURE</p>
+          <h2>サクッと、ふんわり。<br>ほどける二つの食感。</h2>
+          <p>香ばしいパイと、厚みのあるやさしいクリーム。ひと口ごとに広がる味わいを、大切な誰かへ、あるいはご自身へのご褒美に。</p>
+          <div class="point fade-in fade-delay-2"><b>01</b><span>表面を香ばしく焼き上げた、軽やかなパイ生地。</span></div>
+          <div class="point fade-in fade-delay-3"><b>02</b><span>素材の個性を楽しめる、なめらかなクリーム。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flavors" id="flavors">
+      <div class="wrap">
+        <div class="flavors-header">
+          <div class="section-head">
+            <p class="eyebrow fade-in">FIND YOUR FAVORITE</p>
+            <h2 class="fade-in fade-delay-1">6 colors</h2>
+            <p class="fade-in fade-delay-2">今日の気分に寄り添う、空色のラインナップ。<br>5つのフレーバーと、心が弾むアソートをご用意。</p>
+          </div>
+          <div class="flavors-girl">
+            <img id="flavorsGirl" src="assets/soranoa_blue1.png" alt="SORANOAキャラクター">
+          </div>
+        </div>
+        <div class="flavor-grid">
+          <article class="flavor-card custard">
+            <img class="flavor-main" src="assets/4955029050511_m_2.jpg" alt="カスタード">
+            <div class="flavor-copy"><small>CUSTARD</small><h3>カスタード</h3><p>まろやかでコクのある<br>王道のおいしさ</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_custard.png"><img src="assets/pkg_custard.png" alt="カスタード パッケージ"></div></div>
+          </article>
+          <article class="flavor-card choco">
+            <img class="flavor-main" src="assets/4955029050528_m_2.jpg" alt="チョコ">
+            <div class="flavor-copy"><small>CHOCO</small><h3>チョコ</h3><p>チョコの風味が広がる<br>深みのある味わい</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_choco.png"><img src="assets/pkg_choco.png" alt="チョコ パッケージ"></div></div>
+          </article>
+          <article class="flavor-card peach">
+            <img class="flavor-main" src="assets/4955029050542_m_2.jpg" alt="ピーチ">
+            <div class="flavor-copy"><small>PEACH</small><h3>ピーチ</h3><p>やさしく華やぐ<br>みずみずしい香り</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_peach.png"><img src="assets/pkg_peach.png" alt="ピーチ パッケージ"></div></div>
+          </article>
+          <article class="flavor-card matcha">
+            <img class="flavor-main" src="assets/4955029050535_m_2.jpg" alt="抹茶">
+            <div class="flavor-copy"><small>MATCHA</small><h3>抹茶</h3><p>香り豊かで上品な<br>和の余韻</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_matcha.png"><img src="assets/pkg_matcha.png" alt="抹茶 パッケージ"></div></div>
+          </article>
+          <article class="flavor-card strawberry">
+            <img class="flavor-main" src="assets/4955029050559_m_2.jpg" alt="ストロベリー">
+            <div class="flavor-copy"><small>STRAWBERRY</small><h3>ストロベリー</h3><p>甘酸っぱく愛らしい<br>ベリーの味わい</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_strawberry.png"><img src="assets/pkg_strawberry.png" alt="ストロベリー パッケージ"></div></div>
+          </article>
+          <article class="flavor-card assort">
+            <img class="flavor-main" src="assets/4955029050504_m_2.jpg" alt="アソート">
+            <div class="flavor-copy"><small>ASSORT</small><h3>アソート</h3><p>人気の味を詰め合わせた<br>贈りものにも選びやすい一箱</p></div>
+            <div class="flavor-packages"><div class="package-shot" data-pkg="assets/pkg_assort.png"><img src="assets/pkg_assort.png" alt="アソート パッケージ"></div></div>
+          </article>
+        </div>
+      </div>
+      <div class="flavors-bottom-fade"></div>
+    </section>
+
+    <section class="gift" id="gift">
+      <div class="wrap gift-grid">
+        <div class="gift-copy fade-in-left">
+          <p class="eyebrow">A GIFT FROM THE SKY</p>
+          <h2>大切な人へ、<br>空からの<br>贈りものを。</h2>
+          <p>空と雲を描いた軽やかなパッケージ。個包装だから分けやすく、ご家族や親しい方や職場へのプレゼントにもおすすめです。</p>
+        </div>
+        <img class="fade-in-right fade-delay-1" src="assets/texture_stack.jpg" alt="クリームサンドパイ">
+      </div>
+      <div class="gift-bottom-fade"></div>
+    </section>
+
+    <section class="shops" id="shops">
+      <div class="wrap">
+        <h3 class="fade-in">空のような軽やかさを、あなたのもとへ。</h3>
+        <p class="fade-in fade-delay-1">SORANOAのクリームサンドパイを、ぜひ一度お試しください。<br>大切な方への贈りものにも、ご自身へのご褒美にも。</p>
+        <a class="cta fade-in fade-delay-2" href="#top">ページの先頭へ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <img class="footer-logo fade-in" src="assets/sign_logo.png" alt="SORANOA">
+    <small class="fade-in fade-delay-1">CREAM SAND PIE<br>© SORANOA</small>
+  </footer>
+
+  <script>
+    /* =====================
+       iOS Safari / Chrome SP 対応アニメーション
+       - DOMContentLoaded後に初期チェック
+       - rootMargin マイナス値を使わない
+       - touchstart でも補完チェック
+       - NodeList → Array変換でforEach保証
+    ===================== */
+
+    /* 汎用フェードイン */
+    (function () {
+      const els = Array.from(document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right'));
+
+      function inView(el) {
+        const r = el.getBoundingClientRect();
+        return r.top < window.innerHeight + 10 && r.bottom > -10;
+      }
+
+      function activate(el) {
+        if (!el.classList.contains('visible')) el.classList.add('visible');
+      }
+
+      function checkAll() {
+        els.forEach(el => { if (inView(el)) activate(el); });
+      }
+
+      /* IntersectionObserver（補助） */
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { activate(e.target); io.unobserve(e.target); } });
+        }, { threshold: 0 });
+        els.forEach(el => io.observe(el));
+      }
+
+      /* スクロール・タッチで確実に補完 */
+      ['scroll', 'touchmove', 'touchend'].forEach(ev => {
+        window.addEventListener(ev, checkAll, { passive: true });
+      });
+
+      /* 初期チェック：DOMContentLoaded後 + 少し遅延してSafariの描画待ち */
+      function init() {
+        checkAll();
+        setTimeout(checkAll, 200);
+        setTimeout(checkAll, 600);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+
+    /* フレーバーカード 雲フワッとイン */
+    (function () {
+      const cards = Array.from(document.querySelectorAll('.flavor-card'));
+
+      function inView(el) {
+        const r = el.getBoundingClientRect();
+        return r.top < window.innerHeight + 10 && r.bottom > -10;
+      }
+
+      function activateCard(el) {
+        if (el.classList.contains('in-view')) return;
+        const idx = cards.indexOf(el);
+        setTimeout(() => el.classList.add('in-view'), (idx % 2) * 140);
+      }
+
+      function checkAll() {
+        cards.forEach(el => { if (inView(el)) activateCard(el); });
+      }
+
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { activateCard(e.target); io.unobserve(e.target); } });
+        }, { threshold: 0 });
+        cards.forEach(c => io.observe(c));
+      }
+
+      ['scroll', 'touchmove', 'touchend'].forEach(ev => {
+        window.addEventListener(ev, checkAll, { passive: true });
+      });
+
+      function init() {
+        checkAll();
+        setTimeout(checkAll, 300);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+
+    /* パッケージ拡大モーダル */
+    (function () {
+      const modal = document.getElementById('pkgModal');
+      const modalImg = document.getElementById('pkgModalImg');
+      const closeBtn = document.getElementById('pkgModalClose');
+      document.querySelectorAll('.package-shot').forEach(s => {
+        s.addEventListener('click', () => { modalImg.src = s.dataset.pkg; modal.classList.add('open'); });
+      });
+      const close = () => modal.classList.remove('open');
+      closeBtn.addEventListener('click', close);
+      modal.addEventListener('click', e => { if (e.target === modal) close(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    })();
+
+    /* flavors女の子：スクロールで右から飛び込む＋セクション離脱で飛び去り＋戻ると帰る */
+    (function () {
+      const girl = document.getElementById('flavorsGirl');
+      if (!girl) return;
+
+      // 状態管理
+      let flyInDone = false;   // 初回fly-inが完了したか
+      let isVisible = false;   // セクションが現在ビューポート内か
+      let isFlyingOut = false; // fly-out アニメーション中
+
+      const section = document.querySelector('.flavors');
+
+      function inViewSection() {
+        if (!section) return false;
+        const r = section.getBoundingClientRect();
+        // セクション上端がビューポート下端より上 かつ セクション下端がビューポート上端より下
+        return r.top < window.innerHeight && r.bottom > 0;
+      }
+
+      function check() {
+        const visible = inViewSection();
+
+        // ── 初回飛び込み ──
+        if (!flyInDone) {
+          const r = girl.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.85) {
+            flyInDone = true;
+            isVisible = true;
+            girl.classList.remove('fly-out', 'fly-back');
+            void girl.offsetWidth;
+            girl.classList.add('fly-in');
+          }
+          return;
+        }
+
+        // ── セクションが見えなくなった → 飛び去る ──
+        if (!visible && isVisible && !isFlyingOut) {
+          isVisible = false;
+          isFlyingOut = true;
+          girl.classList.remove('fly-in', 'fly-back');
+          void girl.offsetWidth;
+          girl.classList.add('fly-out');
+          girl.addEventListener('animationend', () => {
+            isFlyingOut = false;
+          }, { once: true });
+        }
+
+        // ── セクションが再び見えてきた → 帰ってくる ──
+        if (visible && !isVisible && !isFlyingOut) {
+          isVisible = true;
+          girl.classList.remove('fly-out');
+          void girl.offsetWidth;
+          girl.classList.add('fly-back');
+          girl.addEventListener('animationend', () => {
+            girl.classList.remove('fly-back');
+            girl.classList.add('fly-in');
+          }, { once: true });
+        }
+      }
+
+      /* rAFループで確実に検知（iOS Safari対応） */
+      function loop() {
+        check();
+        if (!flyInDone) requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+      ['scroll', 'touchmove', 'touchend'].forEach(ev => {
+        window.addEventListener(ev, check, { passive: true });
+      });
+    })();
+
+    /* FV 女の子：スクロールで右上に吹き飛ぶ＆トップ付近で戻る */
+    (function () {
+      const girl = document.getElementById('heroGirl');
+      if (!girl) return;
+      let flown = false;
+      let returning = false;
+
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+
+        if (y > 120 && !flown && !returning) {
+          flown = true;
+          girl.classList.remove('fly-return');
+          void girl.offsetWidth;
+          girl.classList.add('fly-away');
+        }
+
+        if (y < 30 && flown) {
+          flown = false;
+          returning = true;
+          girl.classList.remove('fly-away');
+          void girl.offsetWidth;
+          girl.classList.add('fly-return');
+          girl.addEventListener('animationend', () => {
+            girl.classList.remove('fly-return');
+            returning = false;
+            // 通常のfloatに戻す
+            girl.style.animation = '';
+            void girl.offsetWidth;
+            girl.style.animation = 'floatGirl 5.8s ease-in-out infinite';
+          }, { once: true });
+        }
+      });
+    })();
+
+    /* 追従キャラ（TOPボタン兼用） */
+    (function () {
+      const girl = document.getElementById('floating-girl');
+      if (!girl) return;
+      let state = 0, animating = false, pendingNext = false, scrollTimer = null;
+      const END = [
+        'rotate(2deg) translateY(0)',
+        'rotate(-2deg) translateY(0)',
+        'scaleX(-1) rotate(2deg) translateY(0)',
+        'scaleX(-1) rotate(-2deg) translateY(0)',
+      ];
+      function applyAnim() {
+        if (animating) return;
+        animating = true;
+        girl.style.transform = '';
+        girl.classList.remove('sway-up', 'sway-down', 'flipped');
+        void girl.offsetWidth;
+        if (state === 0) girl.classList.add('sway-up');
+        else if (state === 1) girl.classList.add('sway-down');
+        else if (state === 2) girl.classList.add('sway-up', 'flipped');
+        else girl.classList.add('sway-down', 'flipped');
+      }
+      girl.addEventListener('animationend', () => {
+        girl.style.transform = END[state];
+        girl.classList.remove('sway-up', 'sway-down', 'flipped');
+        state = (state + 1) % 4;
+        animating = false;
+        if (pendingNext) { pendingNext = false; applyAnim(); }
+      });
+      window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimer);
+        if (!animating) applyAnim(); else pendingNext = true;
+        scrollTimer = setTimeout(() => { pendingNext = false; }, 200);
+      });
+    })();
+  </script>
+</body>
+</html>
